@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>tip calculator</title>
+    <style>
+      * {
+        margin: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: sans-serif;
+      }
+      .main {
+        background-color: rgb(241, 182, 182);
+        margin: 100px auto;
+        max-width: 600px;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 6px 6px rgba(216, 219, 7, 0.2);
+      }
+      h3 {
+        text-align: center;
+      }
+      input {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        box-shadow: 6px 6px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+      }
+      #calculate {
+        background-color: white;
+        width: 100%;
+        margin-top: 10px;
+        border-radius: 5px;
+        padding: 10px;
+        border: none;
+        box-shadow: rgba(0, 0, 0, 0.4);
+      }
+      button:hover {
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <h3>Tip Calculator</h3>
+      <label for="bill-amount">Bill Amount</label>
+      <input
+        type="number"
+        id="bill-amount"
+        placeholder="enter amount"
+        required
+      />
+      <br />
+      <label for="bill-amount">tip amount</label>
+      <input type="number" id="tip" placeholder="enter amount" required />
+      <br />
+      <button id="calculate">=</button>
+      <br />
+      <label for="totl">total</label>
+      <span id="total"></span>
+    </div>
+    <script>
+      let billInput = document.querySelector('#bill-amount');
+      let tipInput = document.querySelector('#tip');
+      let calculate = document.querySelector('#calculate');
+      let totalval = document.querySelector('#total');
+      calculate.addEventListener('click', function () {
+        billVal = billInput.value;
+        tipVal = tipInput.value;
+        let total = billVal * (1 + tipVal / 100);
+        totalval.innerHTML = total.toFixed(2);
+        billInput.value = '';
+        tipInput.value = '';
+      });
+    </script>
+  </body>
+</html>
