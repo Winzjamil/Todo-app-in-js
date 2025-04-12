@@ -4,41 +4,44 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>todo task</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <input type="text" class="input-field" />
-    <h2>Done Task</h2>
-    <ul class="done-ul"></ul>
-    <h2>Pending task</h2>
-    <ul class="pending-ul"></ul>
-    <button class="add-task">+ Pending Task</button>
+    <div class="container">
+      <input type="text" class="input-field" />
+      <h2>Done Task</h2>
+      <ul class="done-ul"></ul>
+      <h2>Pending task</h2>
+      <ul class="pending-ul"></ul>
+      <button class="add-task">+ Pending Task</button>
+    </div>
     <script>
-      const defaultTasks = [
-        { name: 'clean', status: 'done' },
-        { name: 'cook', status: 'pending' },
-        { name: 'sleep', status: ' pending' },
-        { name: 'eat', status: 'done' },
-      ];
-
-      let tasks = localStorage.getItem('tasks');
-
-      if (tasks) {
-        tasks = JSON.parse(tasks);
-      } else {
-        tasks = defaultTasks;
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-      }
-
-      console.log('TASKS-->>', tasks);
-
-      // const tasks1 = JSON.parse(localStorage.getItem('tasks') || '[]');
-
-      // let tasks = [
+      // const defaultTasks = [
       //   { name: 'clean', status: 'done' },
       //   { name: 'cook', status: 'pending' },
       //   { name: 'sleep', status: ' pending' },
       //   { name: 'eat', status: 'done' },
       // ];
+
+      // let tasks = localStorage.getItem('tasks');
+
+      // if (tasks) {
+      //   tasks = JSON.parse(tasks);
+      // } else {
+      //   tasks = defaultTasks;
+      //   localStorage.setItem('tasks', JSON.stringify(tasks));
+      // }
+
+      // console.log('TASKS-->>', tasks);
+
+      // const tasks1 = JSON.parse(localStorage.getItem('tasks') || '[]');
+
+      let tasks = [
+        { name: 'clean', status: 'done' },
+        { name: 'cook', status: 'pending' },
+        { name: 'sleep', status: ' pending' },
+        { name: 'eat', status: 'done' },
+      ];
 
       let input = document.querySelector('.input-field');
       let pendingUl = document.querySelector('.pending-ul');
@@ -119,9 +122,9 @@
         });
 
         // save to local storage
-        if (!tasks.length) {
-          localStorage.removeItem('tasks');
-        } else localStorage.setItem('tasks', JSON.stringify(tasks));
+        // if (!tasks.length) {
+        //   localStorage.removeItem('tasks');
+        // } else localStorage.setItem('tasks', JSON.stringify(tasks));
 
         this.parentElement.remove();
       }
