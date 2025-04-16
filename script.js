@@ -19,10 +19,9 @@
 // const tasks1 = JSON.parse(localStorage.getItem('tasks') || '[]');
 
 let tasks = [
-  { name: 'clean', status: 'done' },
-  { name: 'cook', status: 'pending' },
-  { name: 'sleep', status: ' pending' },
-  { name: 'eat', status: 'done' },
+  { name: 'clean', status: 'done', date: 'april 14,2025' },
+  { name: 'cook', status: 'pending', date: 'april 14,2025' },
+  { name: 'eat', status: 'done', date: 'april 14,2025' },
 ];
 
 let input = document.querySelector('.input-field');
@@ -38,99 +37,132 @@ tasks.forEach(function (task) {
 
   let delBtn = document.createElement('button');
   delBtn.className = 'del-button';
-  let spanIcon = document.createElement('span');
-  spanIcon.classList.add('fa-solid', 'fa-trash');
-  spanIcon.style.textAlign = 'center';
-  spanIcon.style.color = '#E52020';
-  delBtn.prepend(spanIcon);
-
-  delBtn.addEventListener('click', delItem);
+  addTrashIcon(delBtn);
+  delBtn.addEventListener('click', delItemClickHandler);
 
   if (task.status == 'done') {
     doneUl.append(li);
     li.append(delBtn);
   } else {
     pendingUl.append(li);
-    let doneBtn = document.createElement('button');
-    doneBtn.textContent = 'OK';
-    doneBtn.addEventListener('click', doneClickHandler);
+    // for existing task
+    taskDate = new Date(task.date);
+    const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+    const dateFormatted = taskDate.toLocaleDateString('en-US', dateOptions);
+    let span = document.createElement('span');
+    span.className = 'date-span';
+    span.textContent = dateFormatted;
+    li.append(span);
 
+    let doneBtn = document.createElement('button');
+    doneBtn.className = 'done-btn';
+    addThumbsUpIcon(doneBtn);
     li.append(doneBtn);
+    doneBtn.addEventListener('click', doneClickHandler);
     li.append(delBtn);
   }
 });
+
 let addTask = document.querySelector('.add-task');
-
+addTask.textContent = 'Add Task';
+let span = document.createElement('span');
+span.classList.add('fa-solid', 'fa-rocket', 'fa-shake');
+addTask.prepend(span);
 addTask.addEventListener('click', function () {
-  if (input.value.trim('') === '') {
-    return alert(' please add something');
+  let task = input.value.trim('');
+  if (!task) {
+    return alert('oops! Please Add a Task');
   }
-
   let li = document.createElement('li');
   let em = document.createElement('em');
   em.textContent = input.value;
   li.append(em);
-  let doneBtn = document.createElement('button');
-  doneBtn.textContent = 'OK';
 
+  let taskDate = new Date();
+  const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+  const dateFormatted = taskDate.toLocaleDateString('en-US', dateOptions);
+  let span = document.createElement('span');
+  span.className = 'date-span';
+  span.textContent = dateFormatted;
+  li.append(span);
+
+  let doneBtn = document.createElement('button');
+  doneBtn.className = 'done-btn';
+  addThumbsUpIcon(doneBtn);
   doneBtn.addEventListener('click', doneClickHandler);
+  li.append(doneBtn);
 
   let delBtn = document.createElement('button');
   delBtn.className = 'del-button';
-  let spanIcon = document.createElement('span');
-  spanIcon.classList.add('fa-solid', 'fa-trash');
-  spanIcon.style.textAlign = 'center';
-  spanIcon.style.color = '#E52020';
-  delBtn.prepend(spanIcon);
-  // delBtn.prepend(spanIcon);
-
-  delBtn.addEventListener('click', delItem);
-  li.append(doneBtn);
+  addTrashIcon(delBtn);
   li.append(delBtn);
+  delBtn.addEventListener('click', delItemClickHandler);
+
   pendingUl.append(li);
+
   let newTask = {
     name: input.value,
     status: 'pending',
+    date: dateFormatted,
   };
+  if (newTask.name.trim() !== '') {
+    tasks.push(newTask);
+  }
 
-  tasks.push(newTask);
-  input.value = '';
+  input.value = ''; // to make input field empty when task added
 
   // localStorage.setItem('tasks', JSON.stringify(tasks));
 });
-console.log();
 
 function doneClickHandler() {
+  let taskDate = this.previousSibling;
   doneUl.append(this.parentElement);
-  taskName = this.previousSibling.textContent.trim();
+  taskName = this.parentElement.children[0].textContent.trim();
   tasks.forEach(function (task) {
     if (task.name == taskName) {
       task.status = 'done';
     }
   });
   this.remove();
+  taskDate.remove();
 }
 
-function delItem() {
+function delItemClickHandler() {
   let taskName = this.parentElement.children[0].textContent;
-  // console.log(this.parentElement);
-  tasks = tasks.filter(function (task) {
-    return task.name !== taskName;
-  });
+  let confirmDelete = confirm(
+    `Are you sure you  want to  delete " ${taskName} ?"` // is a method use to confirm
+  );
+  if (confirmDelete) {
+    tasks = tasks.filter(function (task) {
+      return task.name !== taskName;
+    });
+    this.parentElement.remove();
+  }
 
   // save to local storage
   // if (!tasks.length) {
   //   localStorage.removeItem('tasks');
   // } else localStorage.setItem('tasks', JSON.stringify(tasks));
-
-  this.parentElement.remove();
 }
-
-function addTrashIcon(delBtn) {
-  let delBtn = document.querySelector('.del-button');
+function addTrashIcon(btn) {
   let spanIcon = document.createElement('span');
-  spanIcon.classList.add('fa-solid', 'fa-trash');
-  spanIcon.style.textAlign = 'center';
-  spanIcon.style.color = '#E52020';
-  delBtn.append(spanIcon);
+  spanIcon.classList.add('fa-solid', 'fa-trash'); //'fa-shake');
+  btn.append(spanIcon);
 }
+
+function addThumbsUpIcon(btn) {
+  let doneIcon = document.createElement('span');
+  doneIcon.classList.add('fa-solid', 'fa-thumbs-up', 'fa-bounce');
+  btn.append(doneIcon);
+}
+
+// function createTaskDate(li) {
+//   taskDate = new Date();
+//   const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+//   const dateFormatted = taskDate.toLocaleDateString('en-US', dateOptions);
+//   let span = document.createElement('span');
+//   span.className = 'date-span';
+//   span.textContent = dateFormatted;
+//   li.append(span);
+//   return dateFormatted;
+// }

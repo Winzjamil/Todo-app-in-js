@@ -32,8 +32,18 @@ body {
   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
   cursor: text;
 }
+.done-ul,
+.pending-ul {
+  margin-top: 10px;
+  list-style-type: none;
+}
+li {
+  margin-top: 10px;
+}
+
 h2 {
   margin-top: 10px;
+  border-bottom: 2px solid black;
 }
 .add-task {
   margin-top: 10px;
@@ -42,20 +52,43 @@ h2 {
   color: #6a80b9;
   font-size: 24px;
 }
-.del-button {
+.del-button,
+.done-btn {
   margin-left: 10px;
   border: none;
   transition: transform 0.2s ease;
 }
-.del-button:hover {
+.del-button:hover,
+.done-btn:hover {
   transform: scale(1.1);
+  cursor: pointer;
 }
 
-/*
-h2 {
-  width: 100%;
-  text-align: center;
+.fa-trash {
+  color: #e52020;
+  font-size: 20px;
+}
+.fa-thumbs-up {
+  color: #007bff;
+  font-size: 20px;
 }
 .add-task {
-  width: 100%; */
-/* } */
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  transition: 0.5s;
+  font-size: large;
+}
+.add-task:hover {
+  transform: scale(1.5);
+  cursor: pointer;
+}
+.fa-rocket {
+  margin-right: 5px;
+  font-size: 22px;
+  color: #efb036;
+}
+.date-span {
+  margin-left: 10px;
+}
