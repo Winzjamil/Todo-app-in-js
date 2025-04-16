@@ -125,3 +125,12 @@ function delItem() {
 
   this.parentElement.remove();
 }
+
+function addTrashIcon(delBtn) {
+  let delBtn = document.querySelector('.del-button');
+  let spanIcon = document.createElement('span');
+  spanIcon.classList.add('fa-solid', 'fa-trash');
+  spanIcon.style.textAlign = 'center';
+  spanIcon.style.color = '#E52020';
+  delBtn.append(spanIcon);
+}
